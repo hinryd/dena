@@ -1,10 +1,4 @@
-import {
-  DeleteResponse,
-  PutResponse,
-  QueryResponse,
-  UpdateObject,
-  UpdateResponse,
-} from "./base.types.ts";
+import { PutResponse, QueryResponse, UpdateObject } from "./base.types.ts";
 
 import { toArray } from "./utils/autil.ts";
 
