@@ -6,7 +6,6 @@ import {
   UpdateResponse,
 } from "./base.types.ts";
 
-import urlJoin from "https://esm.sh/url-join";
 import { toArray } from "./utils/autil.ts";
 
 export default class Base {
@@ -24,9 +23,7 @@ export default class Base {
 
   private async fetcher(options: BaseFetcherOptions) {
     const { body, urlParams, method } = options;
-    const url = urlParams
-      ? urlParams.reduce((p, c) => urlJoin(p, c), this.baseUrl)
-      : this.baseUrl;
+    const url = this.baseUrl + (urlParams ? `/${urlParams.join("/")}` : "");
 
     const response = await fetch(url, {
       method: method ? method : "GET",
