@@ -9,20 +9,17 @@ import {
 import urlJoin from "https://esm.sh/url-join";
 import { toArray } from "./utils/autil.ts";
 
-// deno-lint-ignore no-explicit-any
 export default class Base<T = Record<any, any>> {
-  private key: string;
-  private id: string;
-  // private options: Options;
-  private name: string;
-  private get baseUrl() {
-    return `https://database.deta.sh/v1/${this.id}/${this.name}`;
-  }
+  private readonly key: string;
+  private readonly id: string;
+  private readonly name: string;
+  private readonly baseUrl: string;
+
   constructor(key: string, id: string, name: string) {
     this.key = key;
     this.id = id;
-    // this.options = options;
     this.name = name;
+    this.baseUrl = `https://database.deta.sh/v1/${this.id}/${this.name}`;
   }
 
   private async fetcher(options: BaseFetcherOptions) {
@@ -37,7 +34,7 @@ export default class Base<T = Record<any, any>> {
         "X-API-Key": this.key,
         "Content-Type": "application/json",
       },
-      [body ? "body" : ""]: JSON.stringify(body),
+      body: body ? JSON.stringify(body) : undefined,
     });
 
     const statusCode = response.status;
