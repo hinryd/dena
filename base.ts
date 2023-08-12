@@ -51,7 +51,7 @@ export default class Base<T = Record<any, any>> {
    * Stores multiple items in a single request. This request overwrites an item if the key already exists.
    * @param `items` An array of items object to be stored.
    */
-  async put(items: T | T[]): Promise<PutResponse> {
+  async put(items: T | T[]): Promise<PutResponse<T & { key: string }>> {
     items = toArray(items);
     const body = { items };
     return await this.fetcher({
@@ -65,7 +65,7 @@ export default class Base<T = Record<any, any>> {
    * Get a stored item.
    * @param key The key (aka. ID) of the item you want to retrieve
    */
-  async get(key: string): Promise<T> {
+  async get<T>(key: string): Promise<T & { key: string }> {
     return await this.fetcher({
       urlParams: ["items", key],
     });
@@ -75,7 +75,7 @@ export default class Base<T = Record<any, any>> {
    * Delete a stored item.
    * @param key The key (aka. ID) of the item you want to delete.
    */
-  async delete(key: string): Promise<DeleteResponse> {
+  async delete(key: string): Promise<{ key: string }> {
     return await this.fetcher({
       urlParams: ["items", key],
       method: "DELETE",
@@ -86,7 +86,7 @@ export default class Base<T = Record<any, any>> {
    * Creates a new item only if no item with the same `key` exists.
    * @param item The item to be stored.
    */
-  async insert(item: T): Promise<T> {
+  async insert(item: T): Promise<T & { key: string }> {
     const body = { item };
     return await this.fetcher({
       urlParams: ["items"],
@@ -111,7 +111,7 @@ export default class Base<T = Record<any, any>> {
   async query<T>(
     query: DefaultObject[] | DefaultObject = [],
     limit?: number,
-    last?: string,
+    last?: string
   ): Promise<QueryResponse<T>> {
     query = toArray(query);
     const body = { query, limit, last };

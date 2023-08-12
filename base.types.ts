@@ -1,17 +1,13 @@
 // deno-lint-ignore-file no-explicit-any
 /// <reference path="./global.d.ts" />
 
-export interface PutResponse {
+export interface PutResponse<T> {
   processed: {
-    items: any[];
+    items: T[];
   };
   failed: {
-    items: any[];
+    items: T[];
   };
-}
-
-export interface DeleteResponse {
-  key: string;
 }
 
 export interface UpdateResponse<T> extends UpdateObject<T> {
