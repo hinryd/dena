@@ -13,12 +13,8 @@ export async function fallback(fn: Function, fb?: any) {
   }
 }
 
-export function toArray(obj: any) {
-  if (Array.isArray(obj)) {
-    return obj;
-  } else {
-    return [obj];
-  }
+export function toArray(obj: unknown | unknown[]) {
+  return Array.isArray(obj) ? obj : [obj];
 }
 
 export function toUint8Array(obj: string | Uint8Array) {

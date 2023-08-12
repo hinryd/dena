@@ -1,5 +1,4 @@
 import { PutResponse, QueryResponse, UpdateObject } from "./base.types.ts";
-
 import { toArray } from "./utils/autil.ts";
 
 export default class Base {
@@ -43,8 +42,7 @@ export default class Base {
    * @param `items` An array of items object to be stored.
    */
   async put<T>(items: T | T[]): Promise<PutResponse<T & { key: string }>> {
-    items = toArray(items);
-    const body = { items };
+    const body = { items: toArray(items) };
     return await this.fetcher({
       body,
       method: "PUT",
@@ -116,8 +114,7 @@ export default class Base {
     limit?: number,
     last?: string
   ): Promise<QueryResponse<T>> {
-    query = toArray(query);
-    const body = { query, limit, last };
+    const body = { query: toArray(query), limit, last };
     return await this.fetcher({
       method: "POST",
       urlParams: ["query"],
