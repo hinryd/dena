@@ -94,10 +94,10 @@ export default class Base {
     body: UpdateObject<T>
   ): Promise<UpdateObject<T> & { key: string }> {
     // check if delete keys are duplicated
-    const hasNoDuplicates = (arr: (keyof T)[]): arr is (keyof T)[] => {
-      return new Set(arr).size === arr.length;
+    const hasDuplicates = (arr: (keyof T)[]): arr is (keyof T)[] => {
+      return new Set(arr).size !== arr.length;
     };
-    if (body.delete && hasNoDuplicates(body.delete)) {
+    if (body.delete && hasDuplicates(body.delete)) {
       return Promise.reject({
         errors: ["delete keys are duplicated"],
       });
