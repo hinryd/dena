@@ -1,6 +1,5 @@
 //NOTE: My first test file, I'm not sure if it's the best way to do it.
 
-
 import Base from "../base.ts";
 import {
   assert,
@@ -30,32 +29,27 @@ Deno.test(async function base_get() {
 });
 
 Deno.test(async function base_insert() {
-    const result = await testBase.insert({
-        name: "Dena",
-        age: 2,
-      });
-      assertEquals(result.name, "Dena");
-    
+  const result = await testBase.insert({
+    name: "Dena",
+    age: 2,
+  });
+  assertEquals(result.name, "Dena");
 });
 
 Deno.test(async function base_insert_exists() {
-    await testBase.insert({
-        key: "new_key",
-        name: "Dena",
-        age: 2,
-      }).catch(err=>{
-          assert(err.errors[0] === "Key already exists")
-          
-      })
-    
+  await testBase.insert({
+    key: "new_key",
+    name: "Dena",
+    age: 2,
+  }).catch((err) => {
+    assert(err.errors[0] === "Key already exists");
+  });
 });
-  
 
 Deno.test(async function base_delete() {
   const result = await testBase.delete("new_key");
   assertEquals(result.key, "new_key");
 });
-
 
 Deno.test(async function base_update() {
   const result = await testBase.update("new_key", {
@@ -66,7 +60,6 @@ Deno.test(async function base_update() {
   assertEquals(result.key, "new_key");
 });
 
-
 // Deno.test(async function base_query() {
 //     await testBase.query<{ key : string }>({}).then(entries=>{
 //         assertEquals(entries.items.length, 2)
@@ -75,5 +68,5 @@ Deno.test(async function base_update() {
 //         })
 
 //     })
-    
+
 // })

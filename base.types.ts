@@ -33,15 +33,13 @@ export interface DefaultError {
 }
 
 // deno-lint-ignore no-empty-interface
-export interface Options { }
+export interface Options {}
 
 export interface QueryResponse<T = DefaultObject> {
-    paging: { size: number, last? : string }
-    items: T[]
+  paging: { size: number; last?: string };
+  items: T[];
 }
-
 
 // type QueryKey = string | `${string}?ne` | `${string}?lt` | `${string}?gt` | `${string}?lte` | `${string}?gte` | `${string}?pfx` | `${string}?r`
 
 // type QueryOptions = Record<QueryKey, any>
-

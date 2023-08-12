@@ -3,11 +3,11 @@
 // import { Options, DriveFetcherOptions, DrivePut, DrivePutResponse, DriveDeleteResponse, DriveListResponse, DriveListOptions } from './types.ts'
 import urlJoin from "https://esm.sh/url-join";
 import {
-  firstOf,
-  toUint8Array,
-  fallback as _fallback,
-  toArray,
   defaultize,
+  fallback as _fallback,
+  firstOf,
+  toArray,
+  toUint8Array,
 } from "./utils/autil.ts";
 import { defaultDriveFetcher } from "./defaults.ts";
 export default class Drive {
@@ -28,7 +28,7 @@ export default class Drive {
   private async fetcher(options: IDriveFetcher) {
     const { headers, body, method, urlParams, searchParams } = defaultize(
       defaultDriveFetcher,
-      options
+      options,
     );
     const urlString = urlJoin(this.baseUrl, ...urlParams!); //urlParams filled by defaultize
     const search = new URLSearchParams(searchParams);
@@ -86,7 +86,7 @@ export default class Drive {
       (await this.fetcher({
         searchParams: { name },
         urlParams: ["files", "download"],
-      }).then((d) => d.arrayBuffer())) as number[]
+      }).then((d) => d.arrayBuffer())) as number[],
     );
   }
 
