@@ -100,7 +100,19 @@ export default class Base {
    * @param key The key of the item
    * @param body the update object
    */
-  async update(key: string, body: UpdateObject<T>): Promise<UpdateResponse<T>> {
+  async update<T>(
+    key: string,
+    body: UpdateObject<T>
+  ): Promise<UpdateObject<T> & { key: string }> {
+    // check if delete keys are duplicated
+    const hasNoDuplicates = (arr: (keyof T)[]): arr is (keyof T)[] => {
+      return new Set(arr).size === arr.length;
+    };
+    if (body.delete && hasNoDuplicates(body.delete)) {
+      return Promise.reject({
+        errors: ["delete keys are duplicated"],
+      });
+    }
     return await this.fetcher({
       method: "PATCH",
       urlParams: ["items", key],

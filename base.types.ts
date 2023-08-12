@@ -10,17 +10,12 @@ export interface PutResponse<T> {
   };
 }
 
-export interface UpdateResponse<T> extends UpdateObject<T> {
-  key: string;
-}
-
 export interface UpdateObject<T> {
   set?: Partial<T>;
   //NOTE: imagine if we can check if the [keyof T]'s type in number
   increment?: Partial<Record<keyof T, number>>;
   append?: Partial<T>;
   prepend?: Partial<T>;
-  //TODO: find a way to check if there is duplicates
   delete?: (keyof T)[];
 }
 
