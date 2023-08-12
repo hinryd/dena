@@ -9,7 +9,7 @@ import {
 import urlJoin from "https://esm.sh/url-join";
 import { toArray } from "./utils/autil.ts";
 
-export default class Base<T = Record<any, any>> {
+export default class Base {
   private readonly key: string;
   private readonly id: string;
   private readonly name: string;
@@ -51,7 +51,7 @@ export default class Base<T = Record<any, any>> {
    * Stores multiple items in a single request. This request overwrites an item if the key already exists.
    * @param `items` An array of items object to be stored.
    */
-  async put(items: T | T[]): Promise<PutResponse<T & { key: string }>> {
+  async put<T>(items: T | T[]): Promise<PutResponse<T & { key: string }>> {
     items = toArray(items);
     const body = { items };
     return await this.fetcher({
@@ -86,7 +86,7 @@ export default class Base<T = Record<any, any>> {
    * Creates a new item only if no item with the same `key` exists.
    * @param item The item to be stored.
    */
-  async insert(item: T): Promise<T & { key: string }> {
+  async insert<T>(item: T): Promise<T & { key: string }> {
     const body = { item };
     return await this.fetcher({
       urlParams: ["items"],

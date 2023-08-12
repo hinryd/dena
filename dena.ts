@@ -21,7 +21,7 @@ export default class Dena {
    * @returns Base instance
    */
   getBase<T>(name: string) {
-    return new Base<T>(this.key, this.id, name);
+    return new Base(this.key, this.id, name);
   }
 
   /**
